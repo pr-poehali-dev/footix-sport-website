@@ -156,15 +156,123 @@ const MATCHES = [
   },
 ];
 
-const STANDINGS = [
-  { pos: 1, team: "Арсенал 🏆", g: 38, w: 27, d: 4, l: 7, pts: 85, form: ["W","W","W","W","W"] },
-  { pos: 2, team: "Манчестер Сити", g: 38, w: 25, d: 3, l: 10, pts: 78, form: ["W","L","W","D","W"] },
-  { pos: 3, team: "Манчестер Юнайтед", g: 38, w: 22, d: 5, l: 11, pts: 71, form: ["W","W","W","D","L"] },
-  { pos: 4, team: "Астон Вилла", g: 38, w: 19, d: 8, l: 11, pts: 65, form: ["W","D","W","D","W"] },
-  { pos: 5, team: "Брентфорд", g: 38, w: 15, d: 8, l: 15, pts: 53, form: ["D","W","L","W","D"] },
-  { pos: 6, team: "Челси", g: 38, w: 14, d: 10, l: 14, pts: 52, form: ["L","D","W","W","L"] },
-  { pos: 7, team: "Фулхэм", g: 38, w: 14, d: 10, l: 14, pts: 52, form: ["D","W","D","L","L"] },
-  { pos: 8, team: "Ньюкасл", g: 38, w: 13, d: 10, l: 15, pts: 49, form: ["W","D","L","W","W"] },
+const ALL_STANDINGS: Record<string, { pos: number; team: string; g: number; w: number; d: number; l: number; pts: number; form: string[] }[]> = {
+  "АПЛ": [
+    { pos: 1, team: "Арсенал 🏆", g: 38, w: 27, d: 4, l: 7, pts: 85, form: ["W","W","W","W","W"] },
+    { pos: 2, team: "Манчестер Сити", g: 38, w: 25, d: 3, l: 10, pts: 78, form: ["W","L","W","D","W"] },
+    { pos: 3, team: "Манчестер Юнайтед", g: 38, w: 22, d: 5, l: 11, pts: 71, form: ["W","W","W","D","L"] },
+    { pos: 4, team: "Астон Вилла", g: 38, w: 19, d: 8, l: 11, pts: 65, form: ["W","D","W","D","W"] },
+    { pos: 5, team: "Брентфорд", g: 38, w: 15, d: 8, l: 15, pts: 53, form: ["D","W","L","W","D"] },
+    { pos: 6, team: "Челси", g: 38, w: 14, d: 10, l: 14, pts: 52, form: ["L","D","W","W","L"] },
+    { pos: 7, team: "Фулхэм", g: 38, w: 14, d: 10, l: 14, pts: 52, form: ["D","W","D","L","L"] },
+    { pos: 8, team: "Ньюкасл", g: 38, w: 13, d: 10, l: 15, pts: 49, form: ["W","D","L","W","W"] },
+  ],
+  "Ла Лига": [
+    { pos: 1, team: "Барселона 🏆", g: 38, w: 29, d: 7, l: 2, pts: 94, form: ["W","W","W","D","W"] },
+    { pos: 2, team: "Реал Мадрид", g: 38, w: 27, d: 5, l: 6, pts: 86, form: ["W","W","D","W","W"] },
+    { pos: 3, team: "Вильярреал", g: 38, w: 22, d: 6, l: 10, pts: 72, form: ["W","L","W","W","D"] },
+    { pos: 4, team: "Атлетико Мадрид", g: 38, w: 21, d: 6, l: 11, pts: 69, form: ["D","W","W","L","W"] },
+    { pos: 5, team: "Атлетик Бильбао", g: 38, w: 17, d: 9, l: 12, pts: 60, form: ["W","D","D","W","L"] },
+    { pos: 6, team: "Реал Сосьедад", g: 38, w: 16, d: 8, l: 14, pts: 56, form: ["L","W","D","W","D"] },
+    { pos: 7, team: "Бетис", g: 38, w: 13, d: 11, l: 14, pts: 50, form: ["D","D","W","L","W"] },
+    { pos: 8, team: "Жирона", g: 38, w: 12, d: 9, l: 17, pts: 45, form: ["L","W","L","D","W"] },
+  ],
+  "Бундеслига": [
+    { pos: 1, team: "Бавария Мюнхен 🏆", g: 34, w: 26, d: 4, l: 4, pts: 82, form: ["W","W","W","W","D"] },
+    { pos: 2, team: "Байер Леверкузен", g: 34, w: 23, d: 5, l: 6, pts: 74, form: ["W","W","D","W","L"] },
+    { pos: 3, team: "Боруссия Дортмунд", g: 34, w: 18, d: 7, l: 9, pts: 61, form: ["D","W","W","L","W"] },
+    { pos: 4, team: "РБ Лейпциг", g: 34, w: 17, d: 8, l: 9, pts: 59, form: ["W","D","W","D","W"] },
+    { pos: 5, team: "Айнтрахт Франкфурт", g: 34, w: 15, d: 6, l: 13, pts: 51, form: ["L","W","D","W","W"] },
+    { pos: 6, team: "Вольфсбург", g: 34, w: 13, d: 8, l: 13, pts: 47, form: ["W","L","W","D","L"] },
+    { pos: 7, team: "Фрайбург", g: 34, w: 12, d: 9, l: 13, pts: 45, form: ["D","W","L","D","W"] },
+    { pos: 8, team: "Штутгарт", g: 34, w: 12, d: 7, l: 15, pts: 43, form: ["L","D","W","L","W"] },
+  ],
+  "Серия А": [
+    { pos: 1, team: "Интер Милан 🏆", g: 38, w: 27, d: 7, l: 4, pts: 88, form: ["W","W","D","W","W"] },
+    { pos: 2, team: "Наполи", g: 38, w: 25, d: 5, l: 8, pts: 80, form: ["W","D","W","W","L"] },
+    { pos: 3, team: "Рома", g: 38, w: 20, d: 9, l: 9, pts: 69, form: ["D","W","W","D","W"] },
+    { pos: 4, team: "Комо", g: 38, w: 19, d: 7, l: 12, pts: 64, form: ["W","W","L","W","D"] },
+    { pos: 5, team: "Аталанта", g: 38, w: 17, d: 8, l: 13, pts: 59, form: ["L","W","D","W","W"] },
+    { pos: 6, team: "Ювентус", g: 38, w: 16, d: 10, l: 12, pts: 58, form: ["D","L","W","D","W"] },
+    { pos: 7, team: "Лацио", g: 38, w: 15, d: 7, l: 16, pts: 52, form: ["W","D","L","W","L"] },
+    { pos: 8, team: "Милан", g: 38, w: 13, d: 9, l: 16, pts: 48, form: ["L","W","D","L","D"] },
+  ],
+  "РПЛ": [
+    { pos: 1, team: "Зенит 🏆", g: 30, w: 21, d: 5, l: 4, pts: 68, form: ["W","W","W","D","W"] },
+    { pos: 2, team: "Краснодар", g: 30, w: 19, d: 6, l: 5, pts: 63, form: ["W","D","W","W","L"] },
+    { pos: 3, team: "ЦСКА", g: 30, w: 16, d: 7, l: 7, pts: 55, form: ["D","W","W","L","W"] },
+    { pos: 4, team: "Динамо Москва", g: 30, w: 14, d: 8, l: 8, pts: 50, form: ["W","D","L","W","D"] },
+    { pos: 5, team: "Спартак", g: 30, w: 13, d: 7, l: 10, pts: 46, form: ["L","W","D","W","W"] },
+    { pos: 6, team: "Локомотив", g: 30, w: 11, d: 9, l: 10, pts: 42, form: ["D","L","W","D","W"] },
+    { pos: 7, team: "Ростов", g: 30, w: 9, d: 8, l: 13, pts: 35, form: ["W","L","D","L","W"] },
+    { pos: 8, team: "Рубин", g: 30, w: 8, d: 7, l: 15, pts: 31, form: ["L","D","L","W","D"] },
+  ],
+};
+
+const WC_GROUPS = [
+  {
+    name: "Группа A",
+    teams: [
+      { name: "США", played: 2, w: 2, d: 0, l: 0, gf: 5, ga: 1, pts: 6 },
+      { name: "Уругвай", played: 2, w: 1, d: 0, l: 1, gf: 3, ga: 3, pts: 3 },
+      { name: "Панама", played: 2, w: 1, d: 0, l: 1, gf: 2, ga: 2, pts: 3 },
+      { name: "Боливия", played: 2, w: 0, d: 0, l: 2, gf: 0, ga: 4, pts: 0 },
+    ],
+  },
+  {
+    name: "Группа B",
+    teams: [
+      { name: "Аргентина", played: 2, w: 2, d: 0, l: 0, gf: 6, ga: 1, pts: 6 },
+      { name: "Чили", played: 2, w: 1, d: 0, l: 1, gf: 2, ga: 3, pts: 3 },
+      { name: "Перу", played: 2, w: 0, d: 1, l: 1, gf: 2, ga: 4, pts: 1 },
+      { name: "Канада", played: 2, w: 0, d: 1, l: 1, gf: 2, ga: 4, pts: 1 },
+    ],
+  },
+  {
+    name: "Группа C",
+    teams: [
+      { name: "Франция", played: 2, w: 2, d: 0, l: 0, gf: 7, ga: 2, pts: 6 },
+      { name: "Австралия", played: 2, w: 1, d: 0, l: 1, gf: 3, ga: 4, pts: 3 },
+      { name: "Гватемала", played: 2, w: 0, d: 1, l: 1, gf: 1, ga: 3, pts: 1 },
+      { name: "Таити", played: 2, w: 0, d: 1, l: 1, gf: 1, ga: 3, pts: 1 },
+    ],
+  },
+  {
+    name: "Группа D",
+    teams: [
+      { name: "Англия", played: 2, w: 1, d: 1, l: 0, gf: 4, ga: 2, pts: 4 },
+      { name: "Сенегал", played: 2, w: 1, d: 1, l: 0, gf: 3, ga: 2, pts: 4 },
+      { name: "Словения", played: 2, w: 0, d: 1, l: 1, gf: 2, ga: 4, pts: 1 },
+      { name: "Того", played: 2, w: 0, d: 1, l: 1, gf: 1, ga: 2, pts: 1 },
+    ],
+  },
+  {
+    name: "Группа E",
+    teams: [
+      { name: "Испания", played: 2, w: 2, d: 0, l: 0, gf: 5, ga: 0, pts: 6 },
+      { name: "Япония", played: 2, w: 1, d: 0, l: 1, gf: 3, ga: 3, pts: 3 },
+      { name: "Иран", played: 2, w: 0, d: 1, l: 1, gf: 1, ga: 3, pts: 1 },
+      { name: "Коста-Рика", played: 2, w: 0, d: 1, l: 1, gf: 2, ga: 5, pts: 1 },
+    ],
+  },
+  {
+    name: "Группа F",
+    teams: [
+      { name: "Бразилия", played: 2, w: 1, d: 1, l: 0, gf: 4, ga: 2, pts: 4 },
+      { name: "Мексика", played: 2, w: 1, d: 1, l: 0, gf: 3, ga: 2, pts: 4 },
+      { name: "Камерун", played: 2, w: 0, d: 1, l: 1, gf: 2, ga: 3, pts: 1 },
+      { name: "С. Аравия", played: 2, w: 0, d: 1, l: 1, gf: 1, ga: 3, pts: 1 },
+    ],
+  },
+];
+
+const WC_MATCHES = [
+  { home: "США", homeScore: 3, away: "Боливия", awayScore: 0, date: "11 июн", status: "FT" },
+  { home: "Аргентина", homeScore: 2, away: "Канада", awayScore: 1, date: "11 июн", status: "FT" },
+  { home: "Франция", homeScore: 3, away: "Таити", awayScore: 0, date: "12 июн", status: "FT" },
+  { home: "Испания", homeScore: 2, away: "Иран", awayScore: 0, date: "12 июн", status: "FT" },
+  { home: "Бразилия", homeScore: 2, away: "Камерун", awayScore: 2, date: "12 июн", status: "FT" },
+  { home: "Германия", homeScore: null, away: "Япония", awayScore: null, date: "15 июн", status: "SOON" },
 ];
 
 const PLAYER_RATINGS = [
@@ -525,14 +633,18 @@ export default function Index() {
             <h2 className="font-oswald text-4xl font-bold text-white mb-6">ТУРНИРЫ</h2>
 
             <div className="flex flex-wrap gap-2">
-              {["АПЛ", "Ла Лига", "РПЛ", "Бундеслига", "Серия А"].map((t) => (
+              {["АПЛ", "Ла Лига", "Бундеслига", "Серия А", "РПЛ", "ЧМ-2026 🌍"].map((t) => (
                 <button
                   key={t}
                   onClick={() => setActiveTournament(t)}
                   className="px-4 py-2 rounded-lg font-oswald text-sm tracking-wide transition-all"
                   style={{
-                    background: activeTournament === t ? "linear-gradient(135deg, #4A8A2A, #6DBE45)" : "rgba(255,255,255,0.06)",
-                    color: activeTournament === t ? "#fff" : "#aaa",
+                    background: activeTournament === t
+                      ? t === "ЧМ-2026 🌍"
+                        ? "linear-gradient(135deg, #B8860B, #FFD700)"
+                        : "linear-gradient(135deg, #4A8A2A, #6DBE45)"
+                      : "rgba(255,255,255,0.06)",
+                    color: activeTournament === t ? "#000" : "#aaa",
                     border: activeTournament === t ? "none" : "1px solid rgba(255,255,255,0.08)"
                   }}
                 >
@@ -542,47 +654,129 @@ export default function Index() {
             </div>
           </div>
 
-          <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(109,190,69,0.15)" }}>
-            <div className="px-6 py-3 grid grid-cols-12 gap-2 font-oswald text-xs tracking-wider text-gray-500 uppercase"
-              style={{ background: "rgba(109,190,69,0.06)" }}>
-              <div className="col-span-1 text-center">#</div>
-              <div className="col-span-4">Команда</div>
-              <div className="col-span-1 text-center">И</div>
-              <div className="col-span-1 text-center">В</div>
-              <div className="col-span-1 text-center">Н</div>
-              <div className="col-span-1 text-center">П</div>
-              <div className="col-span-2 text-center">Форма</div>
-              <div className="col-span-1 text-center font-bold" style={{ color: "#6DBE45" }}>О</div>
-            </div>
-            {STANDINGS.map((row) => (
-              <div
-                key={row.pos}
-                className="table-row-hover px-6 py-3 grid grid-cols-12 gap-2 items-center cursor-pointer"
-                style={{
-                  borderTop: "1px solid rgba(255,255,255,0.04)",
-                  background: row.pos <= 4 ? "rgba(109,190,69,0.03)" : "transparent"
-                }}
-              >
-                <div className="col-span-1 text-center">
-                  <span className="font-oswald font-bold text-sm"
-                    style={{ color: row.pos <= 4 ? "#6DBE45" : row.pos >= 7 ? "#ef4444" : "#9ca3af" }}>
-                    {row.pos}
-                  </span>
+          {/* League table */}
+          {activeTournament !== "ЧМ-2026 🌍" && (
+            <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(109,190,69,0.15)" }}>
+              <div className="px-6 py-3 grid grid-cols-12 gap-2 font-oswald text-xs tracking-wider text-gray-500 uppercase"
+                style={{ background: "rgba(109,190,69,0.06)" }}>
+                <div className="col-span-1 text-center">#</div>
+                <div className="col-span-4">Команда</div>
+                <div className="col-span-1 text-center">И</div>
+                <div className="col-span-1 text-center">В</div>
+                <div className="col-span-1 text-center">Н</div>
+                <div className="col-span-1 text-center">П</div>
+                <div className="col-span-2 text-center">Форма</div>
+                <div className="col-span-1 text-center font-bold" style={{ color: "#6DBE45" }}>О</div>
+              </div>
+              {(ALL_STANDINGS[activeTournament] ?? []).map((row) => (
+                <div
+                  key={row.pos}
+                  className="table-row-hover px-6 py-3 grid grid-cols-12 gap-2 items-center cursor-pointer"
+                  style={{
+                    borderTop: "1px solid rgba(255,255,255,0.04)",
+                    background: row.pos <= 4 ? "rgba(109,190,69,0.03)" : "transparent"
+                  }}
+                >
+                  <div className="col-span-1 text-center">
+                    <span className="font-oswald font-bold text-sm"
+                      style={{ color: row.pos <= 4 ? "#6DBE45" : row.pos >= 7 ? "#ef4444" : "#9ca3af" }}>
+                      {row.pos}
+                    </span>
+                  </div>
+                  <div className="col-span-4 font-golos font-medium text-white text-sm truncate">{row.team}</div>
+                  <div className="col-span-1 text-center font-golos text-sm text-gray-400">{row.g}</div>
+                  <div className="col-span-1 text-center font-golos text-sm text-gray-400">{row.w}</div>
+                  <div className="col-span-1 text-center font-golos text-sm text-gray-400">{row.d}</div>
+                  <div className="col-span-1 text-center font-golos text-sm text-gray-400">{row.l}</div>
+                  <div className="col-span-2 flex gap-1 justify-center">
+                    {row.form.map((f, j) => (
+                      <span key={j} className={`w-5 h-5 rounded flex items-center justify-center text-xs font-bold ${formColor(f)}`}>{f}</span>
+                    ))}
+                  </div>
+                  <div className="col-span-1 text-center font-oswald font-bold text-white text-sm">{row.pts}</div>
                 </div>
-                <div className="col-span-4 font-golos font-medium text-white text-sm truncate">{row.team}</div>
-                <div className="col-span-1 text-center font-golos text-sm text-gray-400">{row.g}</div>
-                <div className="col-span-1 text-center font-golos text-sm text-gray-400">{row.w}</div>
-                <div className="col-span-1 text-center font-golos text-sm text-gray-400">{row.d}</div>
-                <div className="col-span-1 text-center font-golos text-sm text-gray-400">{row.l}</div>
-                <div className="col-span-2 flex gap-1 justify-center">
-                  {row.form.map((f, j) => (
-                    <span key={j} className={`w-5 h-5 rounded flex items-center justify-center text-xs font-bold ${formColor(f)}`}>{f}</span>
+              ))}
+            </div>
+          )}
+
+          {/* World Cup 2026 */}
+          {activeTournament === "ЧМ-2026 🌍" && (
+            <div className="space-y-6">
+              {/* WC header */}
+              <div className="rounded-2xl p-5 flex flex-col md:flex-row items-center gap-4"
+                style={{ background: "linear-gradient(135deg, rgba(184,134,11,0.15), rgba(255,215,0,0.08))", border: "1px solid rgba(255,215,0,0.25)" }}>
+                <div className="text-5xl">🌍</div>
+                <div>
+                  <div className="font-oswald font-bold text-2xl text-white">ЧЕМПИОНАТ МИРА 2026</div>
+                  <div className="font-golos text-sm text-gray-400">США · Мексика · Канада · 11 июня — 19 июля 2026 · 48 команд</div>
+                </div>
+                <div className="md:ml-auto flex items-center gap-2 px-4 py-2 rounded-full"
+                  style={{ background: "rgba(255,80,80,0.15)", border: "1px solid rgba(255,80,80,0.3)" }}>
+                  <span className="live-pulse inline-block w-2 h-2 rounded-full bg-red-500" />
+                  <span className="font-oswald text-sm text-red-400 font-bold">ИДЁТ ГРУППОВОЙ ЭТАП</span>
+                </div>
+              </div>
+
+              {/* Recent WC matches */}
+              <div>
+                <h3 className="font-oswald text-lg font-bold text-white mb-3">Последние результаты</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {WC_MATCHES.map((m, i) => (
+                    <div key={i} className="match-card rounded-xl p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-oswald text-xs font-bold px-2 py-0.5 rounded"
+                          style={{ background: "rgba(255,215,0,0.15)", color: "#FFD700" }}>
+                          ЧМ-2026 · {m.date}
+                        </span>
+                        <span className="font-oswald text-xs font-bold text-gray-500">{m.status}</span>
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="font-oswald font-bold text-white text-sm flex-1 text-right">{m.home}</span>
+                        <span className="font-oswald font-bold text-xl mx-2" style={{ color: "#FFD700" }}>
+                          {m.homeScore !== null ? `${m.homeScore}:${m.awayScore}` : "vs"}
+                        </span>
+                        <span className="font-oswald font-bold text-white text-sm flex-1">{m.away}</span>
+                      </div>
+                    </div>
                   ))}
                 </div>
-                <div className="col-span-1 text-center font-oswald font-bold text-white text-sm">{row.pts}</div>
               </div>
-            ))}
-          </div>
+
+              {/* WC groups */}
+              <div>
+                <h3 className="font-oswald text-lg font-bold text-white mb-3">Групповой этап</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {WC_GROUPS.map((group) => (
+                    <div key={group.name} className="rounded-2xl overflow-hidden"
+                      style={{ border: "1px solid rgba(255,215,0,0.15)" }}>
+                      <div className="px-4 py-2 font-oswald font-bold text-sm"
+                        style={{ background: "rgba(255,215,0,0.08)", color: "#FFD700" }}>
+                        {group.name}
+                      </div>
+                      <div className="px-4 py-1 grid grid-cols-7 font-oswald text-xs text-gray-600 uppercase">
+                        <div className="col-span-3">Команда</div>
+                        <div className="text-center">И</div>
+                        <div className="text-center">РМ</div>
+                        <div className="text-center">О</div>
+                        <div className="text-center"></div>
+                      </div>
+                      {group.teams.map((t, i) => (
+                        <div key={t.name}
+                          className="px-4 py-2 grid grid-cols-7 items-center table-row-hover"
+                          style={{ borderTop: "1px solid rgba(255,255,255,0.04)", background: i < 2 ? "rgba(255,215,0,0.03)" : "transparent" }}>
+                          <div className="col-span-3 font-golos text-sm font-medium text-white truncate">{t.name}</div>
+                          <div className="text-center font-golos text-xs text-gray-400">{t.played}</div>
+                          <div className="text-center font-golos text-xs text-gray-400">{t.gf}:{t.ga}</div>
+                          <div className="col-span-2 text-center font-oswald font-bold text-sm"
+                            style={{ color: i < 2 ? "#FFD700" : "#9ca3af" }}>{t.pts}</div>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Player Ratings */}
           <div className="mt-12">
