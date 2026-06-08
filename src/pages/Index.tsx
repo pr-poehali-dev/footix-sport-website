@@ -8,6 +8,7 @@ const AERIAL_IMG = "https://cdn.poehali.dev/projects/90793789-5f83-4454-86f6-605
 const NAV_ITEMS = [
   { id: "home", label: "Главная" },
   { id: "news", label: "Новости" },
+  { id: "articles", label: "Статьи" },
   { id: "matches", label: "Матчи" },
   { id: "tournaments", label: "Турниры" },
   { id: "teams", label: "Команды" },
@@ -62,6 +63,57 @@ const NEWS = [
     time: "12 часов назад",
     img: AERIAL_IMG,
     hot: false,
+  },
+];
+
+const ARTICLES = [
+  {
+    id: 1,
+    tag: "Аналитика",
+    tagColor: "#6DBE45",
+    title: "Тактическая революция: как прессинг изменил современный футбол",
+    excerpt: "Разбираем, почему топ-клубы всё чаще отказываются от классической схемы 4-4-2 и как высокое давление на соперника стало главным оружием десятилетия.",
+    author: "Алексей Волков",
+    readTime: "8 мин",
+    date: "5 июня 2026",
+    img: AERIAL_IMG,
+    featured: true,
+  },
+  {
+    id: 2,
+    tag: "История",
+    tagColor: "#FFD700",
+    title: "Великие камбэки: топ-10 невероятных возвращений в истории Лиги Чемпионов",
+    excerpt: "От «Стамбульского чуда» до подвигов Барселоны — вспоминаем матчи, которые навсегда вошли в футбольную летопись.",
+    author: "Мария Соколова",
+    readTime: "12 мин",
+    date: "3 июня 2026",
+    img: HERO_IMG,
+    featured: false,
+  },
+  {
+    id: 3,
+    tag: "Интервью",
+    tagColor: "#FF6B6B",
+    title: "Эксклюзив: Холанд о голах, давлении и мечте выиграть ЧМ",
+    excerpt: "Главный бомбардир планеты — о жизни под постоянным вниманием прессы, отношениях с тренером и том, что значит забивать каждую игру.",
+    author: "Дмитрий Орлов",
+    readTime: "6 мин",
+    date: "1 июня 2026",
+    img: PLAYER_IMG,
+    featured: false,
+  },
+  {
+    id: 4,
+    tag: "Трансферы",
+    tagColor: "#A78BFA",
+    title: "Летнее окно 2026: кто куда и за сколько — полный гид по трансферному рынку",
+    excerpt: "Собрали все слухи, инсайды и подтверждённые сделки грядущего трансферного окна в одном материале.",
+    author: "Игорь Петров",
+    readTime: "10 мин",
+    date: "31 мая 2026",
+    img: AERIAL_IMG,
+    featured: false,
   },
 ];
 
@@ -323,8 +375,89 @@ export default function Index() {
         </div>
       </section>
 
+      {/* ARTICLES */}
+      <section id="articles" className="py-20" style={{ background: "var(--dark-card)" }}>
+        <div className="container mx-auto px-6">
+          <div className="flex items-center justify-between mb-10">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-1 h-6 rounded" style={{ background: "linear-gradient(135deg, #4A8A2A, #6DBE45)" }} />
+                <span className="font-oswald text-xs tracking-widest uppercase" style={{ color: "#6DBE45" }}>Глубокий разбор</span>
+              </div>
+              <h2 className="font-oswald text-4xl font-bold text-white">СТАТЬИ</h2>
+            </div>
+            <button className="font-oswald text-sm tracking-wide flex items-center gap-1 hover:gap-2 transition-all" style={{ color: "#6DBE45" }}>
+              Все статьи <Icon name="ArrowRight" size={16} />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Featured article — large */}
+            {ARTICLES.filter(a => a.featured).map((a) => (
+              <div key={a.id} className="news-card rounded-2xl overflow-hidden cursor-pointer lg:row-span-2 flex flex-col slide-up">
+                <div className="relative h-56 overflow-hidden">
+                  <img src={a.img} alt={a.title} className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,14,20,0.95) 0%, transparent 55%)" }} />
+                  <span className="absolute top-4 left-4 px-3 py-1 rounded-full font-oswald text-xs font-bold tracking-wide"
+                    style={{ background: a.tagColor, color: "#000" }}>{a.tag}</span>
+                </div>
+                <div className="p-6 flex flex-col flex-1">
+                  <h3 className="font-oswald font-bold text-white text-xl leading-snug mb-3 hover:text-green-light transition-colors" style={{ color: "#fff" }}>
+                    {a.title}
+                  </h3>
+                  <p className="font-golos text-sm text-gray-400 leading-relaxed mb-5 flex-1">{a.excerpt}</p>
+                  <div className="flex items-center justify-between mt-auto pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white"
+                        style={{ background: "linear-gradient(135deg, #4A8A2A, #6DBE45)" }}>
+                        {a.author[0]}
+                      </div>
+                      <div>
+                        <p className="font-golos text-xs text-white font-medium">{a.author}</p>
+                        <p className="font-golos text-xs text-gray-500">{a.date}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1 text-gray-500">
+                      <Icon name="Clock" size={13} />
+                      <span className="font-golos text-xs">{a.readTime}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Regular articles */}
+            <div className="flex flex-col gap-4">
+              {ARTICLES.filter(a => !a.featured).map((a, i) => (
+                <div key={a.id} className="news-card rounded-2xl overflow-hidden cursor-pointer flex gap-4 p-4 slide-up"
+                  style={{ animationDelay: `${i * 0.08}s` }}>
+                  <div className="relative w-28 h-24 flex-shrink-0 rounded-xl overflow-hidden">
+                    <img src={a.img} alt={a.title} className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                  </div>
+                  <div className="flex flex-col flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="px-2 py-0.5 rounded-full font-oswald text-xs font-bold"
+                        style={{ background: `${a.tagColor}22`, color: a.tagColor }}>{a.tag}</span>
+                    </div>
+                    <h3 className="font-oswald font-bold text-white text-sm leading-snug mb-2 line-clamp-2">{a.title}</h3>
+                    <div className="flex items-center gap-3 mt-auto">
+                      <span className="font-golos text-xs text-gray-500">{a.author}</span>
+                      <span className="text-gray-700">·</span>
+                      <div className="flex items-center gap-1 text-gray-500">
+                        <Icon name="Clock" size={11} />
+                        <span className="font-golos text-xs">{a.readTime}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* MATCHES */}
-      <section id="matches" className="py-20" style={{ background: "var(--dark-card)" }}>
+      <section id="matches" className="py-20" style={{ background: "var(--dark-bg)" }}>
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between mb-10">
             <div>
